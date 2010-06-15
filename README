@@ -1,0 +1,6 @@
+Modified Library of Congress MARCXML to MODS (version 3.3) stylesheet (http://www.loc.gov/standards/mods/mods-conversions.html)
+for handling transformation of open bibliografic data from HelMet libraries. (http://data.kirjastot.fi/helmet/helmet_opendata_doc.html)
+
+==Revision 1.0==
+Use MARC21 field 035 - System Control Number to generate a persistent URL to Helmet Catalogue (http://www.helmet.fi) 
+URL is placed at /location/url -element.
