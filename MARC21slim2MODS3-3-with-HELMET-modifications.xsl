@@ -10,8 +10,9 @@ to reflect the new revision number.
 -->
 
 
-<!--MARC21slim2MODS3-3-with-HELMET-modifications (Revision 1.0) 20100615
+<!--MARC21slim2MODS3-3-with-HELMET-modifications (Revision 1.1) 20110713
 
+Revision 1.1 - Support for Helmet-spesific call numbers in fields 588-591 - 20110713 mjlassila
 Revision 1.0 - Support for Helmet persistent URLs - 20100615 mjlassila
 
 -->
@@ -2064,6 +2065,14 @@ Revision 1.2 - Added Log Comment  2003/03/24 19:37:42  ckeith
 				</xsl:call-template>
 			</classification>
 		</xsl:for-each>
+		<!--HELMET-modification: Fields 588-591 contain library spesific classification code according to the Helmet cataloging rules
+		    source: http://data.kirjastot.fi/helmet/helmet_luettelointiohjeet.pdf -->
+
+		<xsl:apply-templates select="marc:datafield[@tag=588 or @tag=589 or @tag=590 or @tag=590 or @tag=591]/marc:subfield"/>
+
+
+
+
 		<xsl:for-each select="marc:datafield[@tag=060]">
 			<classification authority="nlm">
 				<xsl:call-template name="subfieldSelect">
@@ -3786,4 +3795,46 @@ Revision 1.2 - Added Log Comment  2003/03/24 19:37:42  ckeith
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-</xsl:stylesheet>
+	<!--HELMET-modifications: Templates for outputting city-spesific classification codes -->
+	<xsl:template match="marc:datafield[@tag=588]/marc:subfield[@code='a']">
+		  <classification city="helsinki" mainclass="true">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=588]/marc:subfield[@code='b']">
+		  <classification city="helsinki" mainclass="false">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=589]/marc:subfield[@code='a']">
+		  <classification city="espoo" mainclass="true">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=589]/marc:subfield[@code='b']">
+		  <classification city="espoo" mainclass="false">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=590]/marc:subfield[@code='a']">
+		  <classification city="vantaa" mainclass="true">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=590]/marc:subfield[@code='b']">
+		  <classification city="vantaa" mainclass="false">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=591]/marc:subfield[@code='a']">
+		  <classification city="kauniainen" mainclass="true">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		<xsl:template match="marc:datafield[@tag=591]/marc:subfield[@code='b']">
+		  <classification city="kauniainen" mainclass="false">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </classification>
+		</xsl:template>
+		</xsl:stylesheet>
+
